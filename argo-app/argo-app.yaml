@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/jhaab2/eks-argo.git
     targetRevision: main
-    path: argo-k8s 
+    path: k8s 
   destination:
     server: https://kubernetes.default.svc
     namespace: default

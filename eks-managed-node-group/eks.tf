@@ -21,20 +21,20 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
   endpoint_public_access  = true # Keep it false for PROD env.
   endpoint_private_access = true # This is used in cluster hardening.
-  #endpoint_public_access_cidrs = ["YOUR.PC.IP.ADDR/MASK"]
+  #endpoint_public_access_cidrs = ["X.X.X.X/32"]
   enable_cluster_creator_admin_permissions = true 
   
 
 
   eks_managed_node_groups = {
     node_group_1 = {
-      instance_types = ["t3.medium"]
+      instance_types = ["t3a.medium"]
       #ami_type       = "AL2023_x86_64_STANDARD"
 
       min_size = 1
       max_size = 3
       desired_size = 1
-      capacity_type  = "SPOT"
+      capacity_type  = "ON_DEMAND"
     }
   }
   tags = local.tags
@@ -46,10 +46,12 @@ data "aws_caller_identity" "current" {}
 
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_name
+  depends_on = [module.eks]
 }
 
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_name
+  depends_on = [module.eks]
 }
 
 provider "kubernetes" {
