@@ -80,3 +80,16 @@ resource "helm_release" "argocd" {
 
   depends_on = [module.eks]
 }
+
+#INSTALL INGRESS-NGINX
+
+resource "helm_release" "ingress-nginx" {
+  name = "ingress-nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart = "ingress-nginx"
+  namespace = "ingress-nginx"
+  create_namespace = true
+  version = "4.13.3"
+
+  depends_on = [module.eks]
+}
