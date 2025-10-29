@@ -18,9 +18,9 @@ terraform apply --auto-approve
 Once Argo CD is deployed, access your UI and deploy k8s manifests:
 
 ```bash
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl get ingress -n argocd
 ```
-Open https://localhost:8080
+Open <Loadbalancer URL>
 
 Get the Admin password 
 ```bash
